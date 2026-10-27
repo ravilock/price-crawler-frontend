@@ -1,6 +1,7 @@
 import { accessToken } from '../auth/keycloak';
+import { config } from '../config';
 
-const apiBase = import.meta.env.VITE_API_BASE_URL ?? '/api';
+const apiBase = config.apiUrl;
 
 export async function apiRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = await accessToken();

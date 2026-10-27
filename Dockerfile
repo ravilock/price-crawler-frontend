@@ -6,3 +6,4 @@ COPY src ./src
 RUN npm install && npm run build
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY docker-entrypoint.d/ /docker-entrypoint.d/

@@ -1,9 +1,13 @@
 import Keycloak from 'keycloak-js';
+import { config } from '../config';
 
+const issuer = config.oidcIssuer.replace(/\/$/, '');
+const separator = issuer.lastIndexOf('/realms/');
+if (separator < 0 || !issuer.slice(separator + 8)) throw new Error('Invalid OIDC issuer');
 export const keycloak = new Keycloak({
-  url: import.meta.env.VITE_OIDC_URL ?? 'http://localhost:8080',
-  realm: import.meta.env.VITE_OIDC_REALM ?? 'price-intelligence',
-  clientId: import.meta.env.VITE_OIDC_CLIENT_ID ?? 'price-intelligence-spa',
+  url: issuer.slice(0, separator),
+  realm: issuer.slice(separator + 8),
+  clientId: config.oidcClientId,
 });
 
 export async function initializeAuthentication(): Promise<void> {
