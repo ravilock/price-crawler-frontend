@@ -1,1 +1,5 @@
-export async function submitOffer(url:string):Promise<{request_id:string}>{const token=localStorage.getItem('access_token');const response=await fetch('/api/offers',{method:'POST',headers:{'content-type':'application/json',...(token?{authorization:`Bearer ${token}`}:{})},body:JSON.stringify({url})});if(!response.ok)throw new Error('Offer submission failed');return response.json()}
+import { apiRequest } from '../api/client';
+
+export function submitOffer(url: string): Promise<{ request_id: string }> {
+  return apiRequest('/offers', { method: 'POST', body: JSON.stringify({ url }) });
+}
