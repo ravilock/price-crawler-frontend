@@ -61,8 +61,8 @@ export function Offers() {
     if (options.append) setRefreshing(true); else if (!options.requestId) setLoading(true);
     try {
       const result = await readOfferResults(options);
-      updateItems(result.items);
-      if (!options.requestId) setCursor(result.next_cursor);
+      updateItems(Array.isArray(result.items) ? result.items : []);
+      if (!options.requestId) setCursor(result.next_cursor ?? null);
     } catch (cause) {
       if (!options.quiet) setError(accessMessage(cause));
     } finally {
