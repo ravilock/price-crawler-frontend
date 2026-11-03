@@ -145,7 +145,7 @@ not represented by process health and remains subject to its own acceptance chec
 
 # Frontend
 
-The container reads `API_URL`, `OIDC_ISSUER`, and `OIDC_CLIENT_ID` on startup and writes browser configuration. Defaults are `/api`, `http://localhost:8080/realms/price-intelligence`, and `price-intelligence-spa`. Configure the API URL as reachable from the browser; `/api` requires a reverse proxy. The Keycloak client must have matching allowed origins and redirect URIs.
+The container reads `API_URL`, `OIDC_ISSUER`, and `OIDC_CLIENT_ID` on startup and writes browser configuration. Defaults are `/api`, `http://localhost:8080/realms/price-intelligence`, and `price-intelligence-spa`. The bundled Nginx configuration proxies `/api/` to the Compose `user-api` service, keeping authenticated browser requests same-origin and avoiding API CORS preflights. Set `API_URL` to an absolute URL only when that API separately allows the frontend origin and `Authorization` header. The Keycloak client must have matching allowed origins and redirect URIs.
 
 The container's `/healthz` reports only that the static frontend can be served.
 It does not test the API, identity provider, or integrated demo readiness.

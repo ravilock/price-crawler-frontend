@@ -234,7 +234,7 @@ services:
     build:
       context: .
     environment:
-      API_URL: ${API_URL-http://localhost:${USER_API_PORT:-19782}}
+      API_URL: ${API_URL-/api}
       OIDC_ISSUER: ${OIDC_ISSUER-${OIDC_BASE_URL:-http://localhost:19781}/realms/price-intelligence}
       OIDC_CLIENT_ID: ${OIDC_CLIENT_ID-price-intelligence-spa}
     depends_on:
